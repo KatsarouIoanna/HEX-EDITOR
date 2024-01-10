@@ -116,12 +116,16 @@ class Window:
             file.close()
 
     def temp_save(self):   #γίνεται προσωρινή αποθήκευση #χρησιμεύει όταν ο χρήστης έχει επεξεργαστεί την δεκαεξαδική ανπαράσταση
-        temp = self.print_contentx.get("1.0", tk.END).replace(" ","")
-        for i in range(0,len(temp)-1,2 ):
-            character = temp[i]
-            character += temp[i+1]        #δημιουργώ κάθε ζέυγος δεκαεξαδικού αριθμού απο την αντίστοιχη αναπαράσταση
-            character = int(character, 16)
-            self.contentb[(i//2)+self.scroll_level] = character      # στις ((i//2)+self.scroll_level) θέσεις της contentb αντικαθιστώ το κάθε ζεύγος( δλδ την character)
+     temp = self.print_contentx.get("1.0", tk.END).replace(" ","")
+        try: 
+            for i in range(0,len(temp)-1,2 ):
+                character = temp[i]
+                character += temp[i+1]        #δημιουργώ κάθε ζέυγος δεκαεξαδικού αριθμού απο την αντίστοιχη αναπαράσταση
+                character = int(character, 16)
+                self.contentb[(i//2)+self.scroll_level] = character      # στις ((i//2)+self.scroll_level) θέσεις της contentb αντικαθιστώ το κάθε ζεύγος( δλδ την character)
+        except:      #ένδειξη μηνύματος σφάλματος κατά την επεξεργασία του δεκαεξαδικού κειμένου απο τον δέκτη 
+            messagebox.showerror("Error", "A non-hexadecimal digit found.\nPlease enter only hexadecimal digits!")
+    
 
     def refresh(self):
         self.temp_save()
@@ -142,32 +146,4 @@ if __name__ == "__main__": #κυριως προγραμμα
     root=tk.Tk()
     Window(root)
     root.mainloop()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
